@@ -3,7 +3,9 @@ name: L1pipelineCI
 on:
   workflow_dispatch:
 
-env:
+permissions:
+    id-token: write
+    contents: read
 
 jobs:
   create-and-push-images:
