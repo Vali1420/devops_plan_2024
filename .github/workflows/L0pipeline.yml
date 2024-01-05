@@ -1,4 +1,4 @@
-name: L1pipelineCI
+name: L0pipeline_Terraform
 
 on:
   workflow_dispatch:
