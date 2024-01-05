@@ -1,0 +1,16 @@
+name: L1pipelineCI
+
+on:
+  workflow_dispatch:
+
+env:
+
+jobs:
+  create-and-push-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      
