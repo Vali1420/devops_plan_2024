@@ -36,9 +36,9 @@ jobs:
         working-directory: ./L0_Terraform
         run:
           terraform apply
-            -var az_managed_identity_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            -var az_managed_identity_tenant_id=${{ secrets.AZURE_TENANT_ID }}
-            -var az_managed_identity_client_id=${{ secrets.AZURE_CLIENT_ID }}
+            # -var az_managed_identity_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}
+            # -var az_managed_identity_tenant_id=${{ secrets.AZURE_TENANT_ID }}
+            # -var az_managed_identity_client_id=${{ secrets.AZURE_CLIENT_ID }}
             -auto-approve
       
 
