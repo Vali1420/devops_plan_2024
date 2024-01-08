@@ -23,7 +23,7 @@ jobs:
       - name: Initialize Terraform
         working-directory: ./L0_Terraform
         run:
-          terraform init
+          terraform init -lock=false
       
       # - name: Log into Azure
       #   uses: azure/login@v1
