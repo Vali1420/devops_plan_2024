@@ -15,3 +15,7 @@ provider "azurerm"{
     # tenant_id = var.az_managed_identity_tenant_id
     # client_id = var.az_managed_identity_client_id
 }
+
+# -var az_managed_identity_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}
+# -var az_managed_identity_tenant_id=${{ secrets.AZURE_TENANT_ID }}
+# -var az_managed_identity_client_id=${{ secrets.AZURE_CLIENT_ID }}
