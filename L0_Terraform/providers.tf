@@ -11,4 +11,5 @@ terraform {
 provider "azurerm"{
     # skip_provider_registration = "true"
     features {}
+    use_msi = true
 }
