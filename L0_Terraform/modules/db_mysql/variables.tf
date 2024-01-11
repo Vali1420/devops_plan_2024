@@ -10,3 +10,11 @@ variable "vnet_name"{
 
 variable "azure_virtual_network_id"{
 }
+
+variable "mysql_admin"{
+
+}
+
+variable "mysql_password"{
+
+}
