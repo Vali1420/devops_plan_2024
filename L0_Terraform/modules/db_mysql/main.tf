@@ -41,5 +41,5 @@ resource "azurerm_mysql_flexible_server" "default" {
     size_gb = 20
   }
 
-   depends_on = [azurerm_private_dns_zone_virtual_network_link.default]
+   depends_on = [azurerm_private_dns_zone_virtual_network_link.default,azurerm_subnet.default]
 }
