@@ -15,6 +15,7 @@ module "mysql"{
     source="./modules/db_mysql"
     resource_group_location = var.resource_group_location
     resource_group_name = var.resource_group_name
+    vnet_name = var.vnet_name
     azure_virtual_network_id = module.vnet.vnet_id
     depends_on=[module.vnet]
 }

@@ -35,7 +35,11 @@ jobs:
       - name: Apply Terraform Changes
         working-directory: ./L0_Terraform
         run:
-          terraform apply -auto-approve -lock=false
+          terraform apply
+           -var mysql_admin="admin1234"
+           -var mysql_password="Password123!"
+           -auto-approve 
+           -lock=false
       
 
 
