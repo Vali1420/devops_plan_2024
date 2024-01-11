@@ -4,6 +4,17 @@ resource "azurerm_subnet" "default" {
   virtual_network_name = var.vnet_name
   address_prefixes     = ["10.0.0.0/24"]
   service_endpoints    = ["Microsoft.Storage"]
+
+  delegation {
+    name = "fs"
+
+    service_delegation {
+      name = "Microsoft.DBforMySQL/flexibleServers"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+      ]
+    }
+  }
 }
 
 resource "azurerm_private_dns_zone" "default" {
