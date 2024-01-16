@@ -1,7 +1,7 @@
 resource "azurerm_subnet" "default" {
   name                 = "aks-cluster"
   resource_group_name  = var.resource_group_name
-  address_prefix       = "10.0.4.0/22"
+  address_prefix       = ["10.0.4.0/22"]
   virtual_network_name = var.vnet_name
 }
 
