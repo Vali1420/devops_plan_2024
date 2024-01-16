@@ -6,7 +6,7 @@ resource "azurerm_subnet" "default" {
 }
 
 resource "azurerm_kubernetes_cluster" "example" {
-  name                = "aks-carwebapplication"
+  name                = "akscarwebapplication12"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
   dns_prefix          = "akscarwebapp12-dns"
@@ -14,7 +14,7 @@ resource "azurerm_kubernetes_cluster" "example" {
   default_node_pool {
     name       = "default"
     node_count = 1
-    vm_size    = "Standard B2s"
+    vm_size    = "standard_b2s"
     vnet_subnet_id = azurerm_subnet.default.id
 
   }
