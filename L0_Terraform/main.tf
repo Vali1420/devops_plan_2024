@@ -22,8 +22,8 @@
 #     depends_on=[module.vnet]
 # }
 
-module "aks_cluter"{
-    source="./module/aks_cluster"
+module "aks_cluster"{
+    source="./modules/aks_cluster"
     resource_group_location = var.resource_group_location
     resource_group_name = var.resource_group_name
     vnet_name = var.vnet_name
