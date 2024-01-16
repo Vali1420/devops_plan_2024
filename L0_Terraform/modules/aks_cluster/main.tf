@@ -22,7 +22,6 @@ resource "azurerm_kubernetes_cluster" "example" {
   network_profile {
     network_plugin = "kubenet"
     pod_cidr = "10.1.0.0/16"
-    dns_service_ip = "10.1.0.10"
   }
 
   identity {
