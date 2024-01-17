@@ -26,8 +26,8 @@ module "postgres"{
     source="./modules/db_pg"
     resource_group_location = var.resource_group_location
     resource_group_name = var.resource_group_name
-    mysql_admin = var.postgres_admin
-    mysql_password = var.postgres_password
+    postgres_admin = var.postgres_admin
+    postgres_password = var.postgres_password
     vnet_name = var.vnet_name
     azure_virtual_network_id = module.vnet.vnet_id
     depends_on=[module.vnet]
