@@ -1,15 +1,14 @@
 resource "azurerm_subnet" "default" {
-  name                 = "mysql-subnet"
+  name                 = "postgres-subnet"
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.vnet_name
-  address_prefixes     = ["10.0.0.0/24"]
+  address_prefixes     = ["10.0.1.0/24"]
   service_endpoints    = ["Microsoft.Storage"]
 
   delegation {
     name = "fs"
-
     service_delegation {
-      name = "Microsoft.DBforMySQL/flexibleServers"
+      name = "Microsoft.DBforPostgreSQL/flexibleServers"
       actions = [
         "Microsoft.Network/virtualNetworks/subnets/join/action",
       ]
@@ -18,39 +17,27 @@ resource "azurerm_subnet" "default" {
 }
 
 resource "azurerm_private_dns_zone" "default" {
-  name                = "carwebsql2024.mysql.database.azure.com"
+  name                = "carwebsql2024.postgres.database.azure.com"
   resource_group_name = var.resource_group_name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "default" {
-  name                  = "carwebsqlvirtualnetworklink.com"
+  name                  = "postgrescarwebvirtualnetworklink.com"
   private_dns_zone_name = azurerm_private_dns_zone.default.name
   virtual_network_id    = var.azure_virtual_network_id
   resource_group_name   = var.resource_group_name
 }
 
-resource "azurerm_mysql_flexible_server" "default" {
-  name                   = "mysqlcarwebflexibleserver12"
+resource "azurerm_postgresql_flexible_server" "default" {
+  name                   = "postgrescarwebflexibleserver12"
   resource_group_name    = var.resource_group_name
   location               = var.resource_group_location
-  administrator_login    = var.mysql_admin
-  administrator_password = var.mysql_password
-  backup_retention_days  = 7
+  version                = "12"
   delegated_subnet_id    = azurerm_subnet.default.id
   private_dns_zone_id    = azurerm_private_dns_zone.default.id
-  sku_name               = "B_Standard_B1ms"
-  version                = "8.0.21"
+  administrator_login    = var.postgres_admin
+  administrator_password = var.postgres_password
 
-  maintenance_window {
-    day_of_week  = 0
-    start_hour   = 8
-    start_minute = 0
-  }
-
-  storage {
-    iops    = 360
-    size_gb = 20
-  }
-
-   depends_on = [azurerm_private_dns_zone_virtual_network_link.default,azurerm_subnet.default]
+  sku_name   = "B_Standard_B1ms"
+  depends_on = [azurerm_private_dns_zone_virtual_network_link.default]
 }
