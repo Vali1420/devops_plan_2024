@@ -1,9 +1,9 @@
-# module "vnet"{
-#     source="./modules/vnet"
-#     vnet_name = var.vnet_name
-#     resource_group_location = var.resource_group_location
-#     resource_group_name = var.resource_group_name
-# }
+module "vnet"{
+    source="./modules/vnet"
+    vnet_name = var.vnet_name
+    resource_group_location = var.resource_group_location
+    resource_group_name = var.resource_group_name
+}
 
 # module "acr"{
 #     source="./modules/acr"
@@ -33,9 +33,9 @@ module "postgres"{
     depends_on=[module.vnet]
 }
 
-module "aks_cluster"{
-    source="./modules/aks_cluster"
-    resource_group_location = var.resource_group_location
-    resource_group_name = var.resource_group_name
-    vnet_name = var.vnet_name
-}
+# module "aks_cluster"{
+#     source="./modules/aks_cluster"
+#     resource_group_location = var.resource_group_location
+#     resource_group_name = var.resource_group_name
+#     vnet_name = var.vnet_name
+# }
