@@ -58,7 +58,7 @@ jobs:
       - name: Configure AKS Secret Provider
         working-directory: ./Kubernetes/AzureKeyVaultIntegration
         run:
-          helm upgrade --install helm-secrets-provider-aks
+          helm upgrade --install helm-secrets-provider-aks .
           --kubeconfig "${HOME}/config"
           --values values.yaml
           --set-string tenantId=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
