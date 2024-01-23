@@ -38,4 +38,6 @@ module "aks_cluster"{
     resource_group_location = var.resource_group_location
     resource_group_name = var.resource_group_name
     vnet_name = var.vnet_name
+    azure_key_vault_id = data.azurerm_key_vault.keyvault.id
+    azure_key_vault_tenant =data.azurerm_key_vault.keyvault.tenant_id
 }

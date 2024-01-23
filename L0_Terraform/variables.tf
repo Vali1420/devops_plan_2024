@@ -16,6 +16,14 @@ variable "azure_virtual_network_id"{
   default=""
 }
 
+variable "azure_key_vault_id"{
+    default=""
+}
+
+variable "azure_key_vault_tenant"{
+    default=""
+}
+
 variable "mysql_admin"{
 }
 

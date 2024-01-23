@@ -32,16 +32,23 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       
-      - name: Apply Terraform Changes
-        working-directory: ./L0_Terraform
-        run:
-          terraform apply
-           -var mysql_admin="admin1234"
-           -var mysql_password=${{ secrets.DATABASE_PASSWORD }}
-           -var postgres_admin="admin1234"
-           -var postgres_password=${{ secrets.DATABASE_PASSWORD }}
-           -auto-approve 
-           -lock=false
+      # - name: Apply Terraform Changes
+      #   working-directory: ./L0_Terraform
+      #   run:
+      #     terraform apply
+      #      -var mysql_admin="admin1234"
+      #      -var mysql_password=${{ secrets.DATABASE_PASSWORD }}
+      #      -var postgres_admin="admin1234"
+      #      -var postgres_password=${{ secrets.DATABASE_PASSWORD }}
+      #      -auto-approve 
+      #      -lock=false
+      
+      - name: Azure Cluster Configuration
+        run: |
+          az aks get-credentials --name akscarwebapplication12 --resource-group AVL-Vali-Testing
+          az aks enable-addons --addons azure-keyvault-secrets-provider --name akscarwebapplication12 --resource-group AVL-Vali-Testing
+          
+
       
 
 

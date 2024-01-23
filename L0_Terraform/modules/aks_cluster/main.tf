@@ -5,7 +5,7 @@ resource "azurerm_subnet" "default" {
   virtual_network_name = var.vnet_name
 }
 
-resource "azurerm_kubernetes_cluster" "example" {
+resource "azurerm_kubernetes_cluster" "default" {
   name                = "akscarwebapplication12"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
@@ -19,13 +19,28 @@ resource "azurerm_kubernetes_cluster" "example" {
 
   }
 
+  identity {
+   type = "SystemAssigned"
+  }
+
+  key_vault_secrets_provider {
+   # update the secrets on a regular basis
+   secret_rotation_enabled = true
+  }
+
   network_profile {
     network_plugin = "kubenet"
     service_cidr = "10.1.0.0/16"
     dns_service_ip = "10.1.0.10"
   }
+}
 
-  identity {
-    type = "SystemAssigned"
-  }
+resource "azurerm_key_vault_access_policy" "vaultaccess" {
+ key_vault_id = var.azure_key_vault_id
+ tenant_id    = var.azure_key_vault_tenant
+ object_id    = azurerm_kubernetes_cluster.default.key_vault_secrets_provider[0].secret_identity[0].object_id
+ # cluster access to secrets should be read-only
+ secret_permissions = [
+   "Get", "List"
+ ]
 }
