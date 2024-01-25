@@ -16,14 +16,8 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Install Docker
-        uses: docker-practice/actions-setup-docker@v1
-
-      - name: Install dependencies
-        uses: yokawasa/action-setup-kube-tools@v0.9.2
-        with:
-          kubectl: '1.17.1'
-          helm: '3.13.2'
-          kubeconform: '0.5.0'
+        uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
       
       - name: Build Images
         run: |
