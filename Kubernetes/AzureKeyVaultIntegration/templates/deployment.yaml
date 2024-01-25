@@ -16,7 +16,7 @@ spec:
           objectName: CarWebAppConnectionString
           objectType: secret        # object types: secret, key, or cert
           objectVersion: ""         # [OPTIONAL] object versions, default to latest if empty
-    tenantId: {{ .Values.tenantId | quote }}          # The tenant ID of the key vault
+    tenantId: "8bc7d260-b007-467a-a533-77c9747849aa"          # The tenant ID of the key vault
   secretObjects:                              # [OPTIONAL] SecretObjects defines the desired state of synced Kubernetes secret objects
   - data:
     - key: CarWebAppConnectionString                        # data field to populate

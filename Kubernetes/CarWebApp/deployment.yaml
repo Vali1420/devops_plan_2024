@@ -36,8 +36,6 @@ spec:
             secretKeyRef:
               name: carweb-secret 
               key: CarWebAppConnectionString
-      imagePullSecrets:
-        - name: acr-secret
       volumes:
         - name: secrets-store01-inline
           csi:
