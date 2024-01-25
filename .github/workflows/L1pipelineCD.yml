@@ -1,0 +1,39 @@
+name: L1pipeline_CD
+
+on:
+  workflow_dispatch:
+
+permissions:
+    id-token: write
+    contents: read
+
+env:
+  CONFIG: ${{ secrets.AZURE_VALITESTING_KUBE_CONFIG }}
+
+jobs:
+  deploy-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code 
+        uses: actions/checkout@v2
+      
+      - name: Install Docker
+        uses: docker-practice/actions-setup-docker@v1
+
+      - name: Install dependencies
+        uses: yokawasa/action-setup-kube-tools@v0.9.2
+        with:
+          kubectl: '1.17.1'
+          helm: '3.13.2'
+          kubeconform: '0.5.0'
+      
+      - name: Set config file
+        run: |
+           echo "$CONFIG" > ${HOME}/config
+           echo "$CONFIG" > home/runner/.kube/config
+      
+      - name: Install CarWebApp
+        working-directory: ./Kubernetes
+        run: |
+          kubectl apply -f CarWebApp

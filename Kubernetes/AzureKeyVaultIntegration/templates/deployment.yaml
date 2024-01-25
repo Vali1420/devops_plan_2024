@@ -21,5 +21,5 @@ spec:
   - data:
     - key: CarWebAppConnectionString                        # data field to populate
       objectName: CarWebAppConnectionString        # name of the mounted content to sync; this could be the object name or the object alias
-    secretName: carweb-secret                     # name of the Kubernetes secret object
+    secretName: carweb-secret                      # name of the Kubernetes secret object
     type: Opaque

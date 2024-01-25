@@ -9,6 +9,7 @@ permissions:
 
 env:
   CONFIG: ${{ secrets.AZURE_VALITESTING_KUBE_CONFIG }}
+  
 jobs:
   deploy-azure-services:
     runs-on: ubuntu-latest
@@ -53,21 +54,21 @@ jobs:
       #      -lock=false
       
       - name: Set config file
-        run: echo "$CONFIG" > ${HOME}/config
+        run: |
+           echo "$CONFIG" > ${HOME}/config
+           echo "$CONFIG" > home/runner/.kube/config
 
-      - name: Configure AKS Secret Provider
-        working-directory: ./Kubernetes/AzureKeyVaultIntegration
-        run:
-          helm upgrade --install helm-secrets-provider-aks .
-          --kubeconfig "${HOME}/config"
-          --values values.yaml
-          --set-string tenantId=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
+      # - name: Configure AKS Secret Provider
+      #   working-directory: ./Kubernetes/AzureKeyVaultIntegration
+      #   run:
+      #     helm upgrade --install helm-secrets-provider-aks .
+      #     --kubeconfig "${HOME}/config"
+      #     --values values.yaml
+      #     --set-string tenantId=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
 
       - name: Integrate ACR to AKS
         run: |
-          az aks get-credentials --name akscarwebapplication12 --resource-group AVL-Vali-Testing
           az aks update -n akscarwebapplication12 -g AVL-Vali-Testing --attach-acr carwebappcontainerregistry
-
       
       # - name: Azure Cluster Configuration
       #   run: |
