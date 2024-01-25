@@ -39,5 +39,5 @@ jobs:
       - name: Install CarWebApp
         working-directory: ./Kubernetes/CarWebApp
         run: |
-          kubectl get nodes
+          kubectl get nodes --kubeconfig "${HOME}/config"
           kubectl apply -f .
