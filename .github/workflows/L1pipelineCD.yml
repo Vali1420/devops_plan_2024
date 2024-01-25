@@ -40,4 +40,4 @@ jobs:
         working-directory: ./Kubernetes/CarWebApp
         run: |
           kubectl get nodes --kubeconfig "${HOME}/config"
-          kubectl apply -f .
+          kubectl apply -f . --kubeconfig "${HOME}/config"
