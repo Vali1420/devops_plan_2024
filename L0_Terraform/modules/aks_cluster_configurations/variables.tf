@@ -18,3 +18,6 @@ variable "azure_key_vault_tenant_id"{
 
 variable "cluster_key_vault_client_id"{
 }
+
+variable "resource_group_name"{
+}
