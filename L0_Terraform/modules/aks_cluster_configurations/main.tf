@@ -1,10 +1,19 @@
-provider "kubernetes" {
-  host = var.k8s_host
-
-  client_certificate     = base64decode(var.k8s_client_certificate)
-  client_key             = base64decode(var.k8s_client_key)
-  cluster_ca_certificate = base64decode(var.k8s_cluster_ca_certificate)
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      configuration_aliases = [ kubernetes.cluster ]
+    }
+  }
 }
+
+# provider "kubernetes" {
+#   host = var.k8s_host
+
+#   client_certificate     = base64decode(var.k8s_client_certificate)
+#   client_key             = base64decode(var.k8s_client_key)
+#   cluster_ca_certificate = base64decode(var.k8s_cluster_ca_certificate)
+# }
 
 resource "kubernetes_manifest" "secretproviderclass" {
   provider = kubernetes-alpha
