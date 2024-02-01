@@ -41,3 +41,16 @@ module "aks_cluster"{
     azure_key_vault_id = data.azurerm_key_vault.keyvault.id
     azure_key_vault_tenant =data.azurerm_key_vault.keyvault.tenant_id
 }
+
+module "aks_cluster_configurations"{
+    source="./modules/aks_cluster_configurations"
+    k8s_host = module.aks_cluster.k8s_host
+    k8s_client_certificate = module.aks_cluster.k8s_client_certificate
+    k8s_client_key = module.aks_cluster.k8s_client_key
+    k8s_cluster_ca_certificate = module.aks_cluster.k8s_cluster_ca_certificate
+    cluster_key_vault_client_id = module.cluster_key_vault_client_id
+    subscription_id = var.subscription_id
+    azure_key_vault_tenant_id = var.azure_key_vault_tenant_id
+    resource_group_name = var.resource_group_name
+    depends_on= [module.aks_cluster]
+}

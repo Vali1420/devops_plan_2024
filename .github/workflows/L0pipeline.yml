@@ -42,16 +42,18 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       
-      # - name: Apply Terraform Changes
-      #   working-directory: ./L0_Terraform
-      #   run:
-      #     terraform apply
-      #      -var mysql_admin="admin1234"
-      #      -var mysql_password=${{ secrets.DATABASE_PASSWORD }}
-      #      -var postgres_admin="admin1234"
-      #      -var postgres_password=${{ secrets.DATABASE_PASSWORD }}
-      #      -auto-approve 
-      #      -lock=false
+      - name: Apply Terraform Changes
+        working-directory: ./L0_Terraform
+        run:
+          terraform apply
+           -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}
+           -var azure_key_vault_tenant_id=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
+           -var mysql_admin="admin1234"
+           -var mysql_password=${{ secrets.DATABASE_PASSWORD }}
+           -var postgres_admin="admin1234"
+           -var postgres_password=${{ secrets.DATABASE_PASSWORD }}
+           -auto-approve 
+           -lock=false
       
       - name: Set config file
         run: |
@@ -59,13 +61,13 @@ jobs:
            mkdir -p home/runner/.kube
            echo "$CONFIG" > home/runner/.kube/config
 
-      - name: Configure AKS Secret Provider
-        working-directory: ./Kubernetes/AzureKeyVaultIntegration
-        run:
-          helm upgrade --install helm-secrets-provider-aks .
-          --kubeconfig "${HOME}/config"
-          --values values.yaml
-          --set-string tenantId=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
+      # - name: Configure AKS Secret Provider
+      #   working-directory: ./Kubernetes/AzureKeyVaultIntegration
+      #   run:
+      #     helm upgrade --install helm-secrets-provider-aks .
+      #     --kubeconfig "${HOME}/config"
+      #     --values values.yaml
+      #     --set-string tenantId=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
 
       # - name: Integrate ACR to AKS
       #   run: |
