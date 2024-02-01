@@ -1,7 +1,8 @@
 terraform {
   required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.0"
       configuration_aliases = [ kubernetes.cluster ]
     }
   }
@@ -16,7 +17,7 @@ terraform {
 # }
 
 resource "kubernetes_manifest" "secretproviderclass" {
-  provider = kubernetes-alpha
+  provider = kubernetes.cluster
 
   manifest = {
     "apiVersion" = "secrets-store.csi.x-k8s.io/v1alpha1"
