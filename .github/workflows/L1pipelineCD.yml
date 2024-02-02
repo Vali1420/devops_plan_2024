@@ -32,12 +32,10 @@ jobs:
       
       - name: Set config file
         run: |
-           echo "$CONFIG" > ${HOME}/config
-           mkdir -p home/runner/.kube
-           echo "$CONFIG" > home/runner/.kube/config
+           az aks get-credentials --name akscarwebapplication12 --resource-group AVL-Vali-Testing
       
       - name: Install CarWebApp
         working-directory: ./Kubernetes/CarWebApp
         run: |
-          kubectl get nodes --kubeconfig "${HOME}/config"
-          kubectl apply -f . --kubeconfig "${HOME}/config"
+          kubectl get nodes
+          kubectl apply -f .
