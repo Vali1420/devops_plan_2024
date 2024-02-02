@@ -54,6 +54,7 @@ jobs:
            -lock=false
       
       - name: Terraform save cluster_key_vault_client_id as Secret
+        working-directory: ./L0_Terraform
         run:  terraform output cluster_key_vault_client_id &&
               export CLUSTER_KEY_VAULT_CLIENT_ID=$(terraform output cluster_key_vault_client_id) && 
               echo "::add-mask::$CLUSTER_KEY_VAULT_CLIENT_ID" &&
