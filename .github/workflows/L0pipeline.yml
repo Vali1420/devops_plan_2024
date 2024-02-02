@@ -42,21 +42,21 @@ jobs:
         run:
           terraform init
       
-      # - name: Apply Terraform Changes
-      #   working-directory: ./L0_Terraform
-      #   run:
-      #     terraform apply
-      #      -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      #      -var azure_key_vault_tenant_id=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
-      #      -var mysql_admin="admin1234"
-      #      -var mysql_password=${{ secrets.DATABASE_PASSWORD }}
-      #      -var postgres_admin="admin1234"
-      #      -var postgres_password=${{ secrets.DATABASE_PASSWORD }}
-      #      -auto-approve 
-      #      -lock=false
+      - name: Apply Terraform Changes
+        working-directory: ./L0_Terraform
+        run:
+          terraform apply
+           -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}
+           -var azure_key_vault_tenant_id=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
+           -var mysql_admin="admin1234"
+           -var mysql_password=${{ secrets.DATABASE_PASSWORD }}
+           -var postgres_admin="admin1234"
+           -var postgres_password=${{ secrets.DATABASE_PASSWORD }}
+           -auto-approve 
+           -lock=false
       
       - name: Terraform save cluster_key_vault_client_id as Secret
-        run: CLUSTER_KEY_VAULT_CLIENT_ID=terraform output cluster_key_vault_client_id && 
+        run: export CLUSTER_KEY_VAULT_CLIENT_ID=$(terraform output cluster_key_vault_client_id) && 
               echo "::add-mask::$CLUSTER_KEY_VAULT_CLIENT_ID" &&
               echo CLUSTER_KEY_VAULT_CLIENT_ID=$CLUSTER_KEY_VAULT_CLIENT_ID >> $GITHUB_ENV
 
