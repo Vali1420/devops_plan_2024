@@ -1,4 +1,4 @@
 output "cluster_key_vault_client_id"{
-    value = "dada"
+    value = module.cluster_key_vault_client_id
     sensitive = true
 }
