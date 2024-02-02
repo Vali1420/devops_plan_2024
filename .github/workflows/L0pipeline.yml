@@ -68,7 +68,6 @@ jobs:
         working-directory: ./Kubernetes/AzureKeyVaultIntegration
         run:
           helm upgrade --install helm-secrets-provider-aks .
-          --kubeconfig "${HOME}/config"
           --values values.yaml
           --set-string tenantId=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
           --set-string clientId=$CLUSTER_KEY_VAULT_CLIENT_ID
