@@ -30,44 +30,50 @@ jobs:
           helm: '3.13.2'
           kubeconform: '0.5.0'
 
-      - name: Initialize Terraform
-        working-directory: ./L0_Terraform
-        run:
-          terraform init
-      
       - name: Log into Azure
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      
-      - name: Apply Terraform Changes
+
+      - name: Initialize Terraform
         working-directory: ./L0_Terraform
         run:
-          terraform apply
-           -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}
-           -var azure_key_vault_tenant_id=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
-           -var mysql_admin="admin1234"
-           -var mysql_password=${{ secrets.DATABASE_PASSWORD }}
-           -var postgres_admin="admin1234"
-           -var postgres_password=${{ secrets.DATABASE_PASSWORD }}
-           -auto-approve 
-           -lock=false
+          terraform init
       
+      # - name: Apply Terraform Changes
+      #   working-directory: ./L0_Terraform
+      #   run:
+      #     terraform apply
+      #      -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      #      -var azure_key_vault_tenant_id=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
+      #      -var mysql_admin="admin1234"
+      #      -var mysql_password=${{ secrets.DATABASE_PASSWORD }}
+      #      -var postgres_admin="admin1234"
+      #      -var postgres_password=${{ secrets.DATABASE_PASSWORD }}
+      #      -auto-approve 
+      #      -lock=false
+      
+      - name: Terraform save cluster_key_vault_client_id as Secret
+        run: CLUSTER_KEY_VAULT_CLIENT_ID=terraform output cluster_key_vault_client_id && 
+              echo "::add-mask::$CLUSTER_KEY_VAULT_CLIENT_ID" &&
+              echo CLUSTER_KEY_VAULT_CLIENT_ID=$CLUSTER_KEY_VAULT_CLIENT_ID >> $GITHUB_ENV
+
       - name: Set config file
         run: |
            echo "$CONFIG" > ${HOME}/config
            mkdir -p home/runner/.kube
            echo "$CONFIG" > home/runner/.kube/config
 
-      # - name: Configure AKS Secret Provider
-      #   working-directory: ./Kubernetes/AzureKeyVaultIntegration
-      #   run:
-      #     helm upgrade --install helm-secrets-provider-aks .
-      #     --kubeconfig "${HOME}/config"
-      #     --values values.yaml
-      #     --set-string tenantId=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
+      - name: Configure AKS Secret Provider
+        working-directory: ./Kubernetes/AzureKeyVaultIntegration
+        run:
+          helm upgrade --install helm-secrets-provider-aks .
+          --kubeconfig "${HOME}/config"
+          --values values.yaml
+          --set-string tenantId=${{ secrets.AZURE_KEY_VAULT_TENANTID }}
+          --set-string clientId=$CLUSTER_KEY_VAULT_CLIENT_ID
 
       # - name: Integrate ACR to AKS
       #   run: |

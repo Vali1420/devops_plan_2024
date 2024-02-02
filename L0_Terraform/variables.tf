@@ -39,9 +39,3 @@ variable "postgres_admin"{
 
 variable "postgres_password"{
 }
-
-variable "subscription_id"{
-}
-
-variable "azure_key_vault_tenant_id"{
-}

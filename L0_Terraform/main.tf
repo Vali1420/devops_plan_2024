@@ -33,43 +33,14 @@
 #     depends_on=[module.vnet]
 # }
 
-module "aks_cluster"{
-    source="./modules/aks_cluster"
-    resource_group_location = var.resource_group_location
-    resource_group_name = var.resource_group_name
-    vnet_name = var.vnet_name
-    azure_key_vault_id = data.azurerm_key_vault.keyvault.id
-    azure_key_vault_tenant =data.azurerm_key_vault.keyvault.tenant_id
-}
-
-provider "kubernetes" {
-  alias = "cluster"
-  host = module.aks_cluster.k8s_host
-  client_certificate     = base64decode(module.aks_cluster.k8s_client_certificate)
-  client_key             = base64decode(module.aks_cluster.k8s_client_key)
-  cluster_ca_certificate = base64decode(module.aks_cluster.k8s_cluster_ca_certificate)
-}
-
-module "aks_cluster_configurations"{
-    source="./modules/aks_cluster_configurations"
-    k8s_host = module.aks_cluster.k8s_host
-    k8s_client_certificate = module.aks_cluster.k8s_client_certificate
-    k8s_client_key = module.aks_cluster.k8s_client_key
-    k8s_cluster_ca_certificate = module.aks_cluster.k8s_cluster_ca_certificate
-    cluster_key_vault_client_id = module.aks_cluster.cluster_key_vault_client_id
-    subscription_id = var.subscription_id
-    azure_key_vault_tenant_id = var.azure_key_vault_tenant_id
-    resource_group_name = var.resource_group_name
-    
-    providers = {
-        kubernetes.cluster = kubernetes.cluster
-    }
-}
-
-
-
-
-
+# module "aks_cluster"{
+#     source="./modules/aks_cluster"
+#     resource_group_location = var.resource_group_location
+#     resource_group_name = var.resource_group_name
+#     vnet_name = var.vnet_name
+#     azure_key_vault_id = data.azurerm_key_vault.keyvault.id
+#     azure_key_vault_tenant =data.azurerm_key_vault.keyvault.tenant_id
+# }
 
 # module "aks_cluster_configurations"{
 #     source="./modules/aks_cluster_configurations"
