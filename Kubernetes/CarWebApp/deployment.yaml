@@ -34,7 +34,7 @@ spec:
         - name: PostgreSql
           valueFrom:
             secretKeyRef:
-              name: CarWebAppConnectionString
+              name: carweb-secret
               key: CarWebAppConnectionString
       volumes:
         - name: secrets-store01-inline
