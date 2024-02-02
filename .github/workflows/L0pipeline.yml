@@ -62,9 +62,7 @@ jobs:
 
       - name: Set config file
         run: |
-           echo "$CONFIG" > ${HOME}/config
-           mkdir -p home/runner/.kube
-           echo "$CONFIG" > home/runner/.kube/config
+          az aks get-credentials --name akscarwebapplication12 --resource-group AVL-Vali-Testing
 
       - name: Configure AKS Secret Provider
         working-directory: ./Kubernetes/AzureKeyVaultIntegration
