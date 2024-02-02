@@ -40,6 +40,7 @@ module "aks_cluster"{
     vnet_name = var.vnet_name
     azure_key_vault_id = data.azurerm_key_vault.keyvault.id
     azure_key_vault_tenant =data.azurerm_key_vault.keyvault.tenant_id
+    depends_on=[module.vnet]
 }
 
 # module "aks_cluster_configurations"{
