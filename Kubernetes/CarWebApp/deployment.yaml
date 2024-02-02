@@ -34,7 +34,7 @@ spec:
         - name: PostgreSql
           valueFrom:
             secretKeyRef:
-              name: azure-rkimkv-secret-provider 
+              name: CarWebAppConnectionString
               key: CarWebAppConnectionString
       volumes:
         - name: secrets-store01-inline
